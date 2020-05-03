@@ -1,0 +1,35 @@
+[
+        {
+        "id":"1",
+        "name": "sakthi",
+        "email": "rupsshakthisri408@gmail.com",
+        "phone": "9944229578",
+        "company":"Blueally",
+        "address":"Muthiyalpet,kancheepuram"
+        },
+       {
+        "id":"2",
+        "name": "pavithra",
+        "email": "pavithra@gmail.com",
+        "phone": "9840427038",
+        "company":"HCL",
+        "address":"Ayyampet,kancheepuram"
+        },
+        {
+        "id":"3",
+        "name": "usha",
+        "email": "usha@gmail.com",
+        "phone": "9087762101",
+        "company":"Infosys",
+        "address":"Saidepet,Chennai"
+        },
+        {
+        "id":"4",
+        "name": "Rajendran",
+        "email": "rajendran@gmail.com",
+        "phone": "9941862088",
+        "company":"Accenture",
+        "address":"Tnager,Chennai"
+        }
+       
+]

@@ -1,0 +1,349 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="header">
+            <button type="button" rel="tooltip" title="Add" data-toggle="modal" data-target="#myModal"
+              style="float:right;margin-bottom: 10px;" class="btn btn-info  btn-xs">
+              <i class="fa fa-plus"></i>Add contact
+            </button>
+          </div>
+          <div class="content">
+            <div class="table-full-width">
+              <table class="table borderless">
+                <tr>
+                  <th><i class="fa fa-plus"></i></th>
+                  <th>Basic info</th>
+                  <th class="td-actions text-right">Action</th>
+                  
+                </tr>
+                <tbody>
+                  
+                  <tr *ngFor="let contact of contacts; index as i">
+                    <td>
+                      <div class="checkbox">
+                        <input id="checkbox1" type="checkbox">
+                        <label for="checkbox1">
+                        </label>
+                      </div>
+                    </td>
+                    <td (click)="viewContact(i);"><span class="numberCircle">{{contact.name | slice:0:2}}</span><span class="displayname">{{contact.name}}</span></td>
+                    <td class="td-actions text-right">
+                      <button type="button"   (click)="editContact(i);" rel="tooltip" title="Edit Task" data-toggle="modal" data-target="#editModal" class="btn btn-info btn-simple btn-xs">
+                        <i class="fa fa-edit"></i>
+                      </button>
+                      <button type="button" rel="tooltip" (click)="sendmodelMessage(i)" data-toggle="modal" data-target="#sendModal" title="Message" class="btn btn-danger btn-simple btn-xs">
+                        <i class="fa fa-comment"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  
+               
+                </tbody>
+              </table>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+
+        <div class="card" style="background-color: #f1f1f1;">
+          <div class="header">
+            <h4 class="title" style="text-align: center;"><span class="numberCircleprofile">{{viewcontact.name | slice:0:2}}</span></h4>
+            <p class="headername">{{viewcontact.name}}</p>
+            <p class="headercompany">{{viewcontact.company}}</p>
+
+
+            <table class="table borderless">
+            <tbody>
+            <tr><td>Name:</td><td> {{viewcontact.name}}</td> <tr>
+              <tr><td>Email:</td><td> {{viewcontact.email}}</td> <tr>
+                <tr><td>Phone:</td><td> {{viewcontact.phone}}</td> <tr>
+                  <tr><td>company:</td><td> {{viewcontact.company}}</td> <tr></tr>
+                  <tr><td>Address:</td><td> {{viewcontact.address}}</td> <tr></tr>
+              </tbody>
+              </table>
+          </div>
+          </div>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+
+        <div class="modal fade" id="myModal" role="dialog" data-backdrop="false">
+          <div class="modal-dialog modal-md">
+
+
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Create Contact</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="contactForm" (ngSubmit)="contact(contactForm)">
+                
+                   
+                      <div class="form-group row">
+                        <label for="inputEmail3" class="col-lg-2 col-form-label">Name </label>
+                        <div class="col-lg-6">
+                          <input type="text" class="form-control" formControlName='name' 
+                            placeholder="enter your name">
+                          <div *ngIf="contactForm.controls['name'].touched && !contactForm.controls['name'].valid">
+                            <span class="text-danger" *ngIf="contactForm.controls['name'].hasError('required') ">
+                              Name is required
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputPassword3" class="col-lg-2 col-form-label">Email </label>
+                        <div class="col-lg-6">
+                          <input type="email" class="form-control" formControlName='email' 
+                            placeholder="enter your email">
+                          <div *ngIf="contactForm.controls['email'].touched && !contactForm.controls['email'].valid">
+                            <span class="text-danger" *ngIf="contactForm.controls['email'].hasError('required') ">
+                              Email  is required
+                            </span>
+                            <span class="text-danger" *ngIf="contactForm.controls['email'].hasError('email') ">
+                              Invalid Email 
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputPassword3" class="col-lg-2 col-form-label">Phone</label>
+                        <div class="col-lg-6">
+                          <input type="text" class="form-control" formControlName="phone" placeholder="Enter your phone number">
+                          <div
+                            *ngIf="contactForm.controls['phone'].touched && !contactForm.controls['phone'].valid.errors?.required">
+                            <span class="text-danger" class="text-danger"
+                              *ngIf="contactForm.controls['phone'].hasError('required') ">
+                              Phone number is required
+                            </span>
+                            <span class="text-danger"
+                              *ngIf="contactForm.controls['phone'].touched && contactForm.controls['phone'].errors?.pattern">
+                              Invalid phone number
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputEmail3" class="col-lg-2 col-form-label">Company</label>
+                        <div class="col-lg-6">
+                          <input type="text" class="form-control" formControlName='company'
+                            placeholder="enter your company">
+                          <div *ngIf="contactForm.controls['company'].touched && !contactForm.controls['company'].valid">
+                            <span class="text-danger" *ngIf="contactForm.controls['company'].hasError('required') ">
+                              Company is required
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputEmail3" class="col-lg-2 col-form-label">Address</label>
+                        <div class="col-lg-6">
+                          <textarea class="form-control"  formControlName='address'
+                            placeholder="Enter your address"></textarea>
+                          <div *ngIf="contactForm.controls['address'].touched && !contactForm.controls['address'].valid">
+                            <span class="text-danger" *ngIf="contactForm.controls['address'].hasError('required') ">
+                              Address is required
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-lg-2 col-form-label"></label>
+                        <div class="col-lg-2">
+                          <button type="submit" class="btn btn-primary" (click)="clearmethod($event)">Reset</button>
+                        </div>
+                        <div class="col-lg-2">
+                          <button type="submit" class="btn btn-primary" [disabled]='!contactForm.valid'>Add</button>
+                        </div>
+                      </div>
+                  
+                  
+                </form>
+
+
+              </div>
+              <div class="modal-footer">
+                <span style="float:left">{{addsuccess}}</span>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-6">
+
+        <div class="modal fade" id="editModal" role="dialog" data-backdrop="false">
+          <div class="modal-dialog modal-md">
+
+
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Edit Contact</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="editcontactForm" (ngSubmit)="updatecontact(editcontactForm)">
+                
+                   
+                      <div class="form-group row">
+                        <label for="inputEmail3" class="col-lg-2 col-form-label">Name </label>
+                        <div class="col-lg-6">
+                          <input type="text" class="form-control" formControlName='name' 
+                            placeholder="enter your name" value="{{editcontact?.name}}">
+                          <div *ngIf="editcontactForm.controls['name'].touched && !editcontactForm.controls['name'].valid">
+                            <span class="text-danger" *ngIf="editcontactForm.controls['name'].hasError('required') ">
+                              Name is required
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputPassword3" class="col-lg-2 col-form-label">Email </label>
+                        <div class="col-lg-6">
+                          <input type="email" class="form-control" formControlName='email' 
+                            placeholder="enter your email" value="{{editcontact?.email}}">
+                          <div *ngIf="editcontactForm.controls['email'].touched && !editcontactForm.controls['email'].valid">
+                            <span class="text-danger" *ngIf="editcontactForm.controls['email'].hasError('required') ">
+                              Email  is required
+                            </span>
+                            <span class="text-danger" *ngIf="editcontactForm.controls['email'].hasError('email') ">
+                              Invalid Email 
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputPassword3" class="col-lg-2 col-form-label">Phone</label>
+                        <div class="col-lg-6">
+                          <input type="text" class="form-control" formControlName="phone" value="{{editcontact?.phone}}" placeholder="Enter your phone number">
+                          <div
+                            *ngIf="editcontactForm.controls['phone'].touched && !editcontactForm.controls['phone'].valid.errors?.required">
+                            <span class="text-danger" class="text-danger"
+                              *ngIf="editcontactForm.controls['phone'].hasError('required') ">
+                              Phone number is required
+                            </span>
+                            <span class="text-danger"
+                              *ngIf="editcontactForm.controls['phone'].touched && editcontactForm.controls['phone'].errors?.pattern">
+                              Invalid phone number
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputEmail3" class="col-lg-2 col-form-label">Company</label>
+                        <div class="col-lg-6"> 
+                          <input type="text" class="form-control" formControlName='company'
+                            placeholder="enter your company" value="{{editcontact?.company}}" >
+                          <div *ngIf="editcontactForm.controls['company'].touched && !editcontactForm.controls['company'].valid">
+                            <span class="text-danger" *ngIf="editcontactForm.controls['company'].hasError('required') ">
+                              Company is required
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputEmail3" class="col-lg-2 col-form-label">Address</label>
+                        <div class="col-lg-6">
+                          <textarea class="form-control"  formControlName='address'
+                            placeholder="Enter your address" value="{{editcontact?.address}}"></textarea>
+                          <div *ngIf="editcontactForm.controls['address'].touched && !editcontactForm.controls['address'].valid">
+                            <span class="text-danger" *ngIf="editcontactForm.controls['address'].hasError('required') ">
+                              Address is required
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-lg-2 col-form-label"></label>
+                        
+                        <div class="col-lg-2">
+                          <button type="submit" class="btn btn-primary" >Update</button>
+                        </div>
+                      </div>
+                  
+                  
+                </form>
+
+
+              </div>
+              <div class="modal-footer">
+                <span style="float:left">{{updatesuccess}}</span>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <div class="modal fade" id="sendModal" role="dialog" data-backdrop="false">
+        <div class="modal-dialog modal-md">
+
+
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Send Message</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+            </div>
+            <div class="modal-body">
+              <form [formGroup]="sendMessageForm" (ngSubmit)="sendMessage(sendMessageForm)">
+              
+                
+                  
+                    <div class="form-group row">
+                      <label for="inputEmail3" class="col-lg-2 col-form-label">Receiver</label>
+                      <div class="col-lg-6"> 
+                        {{viewcontact?.name}}
+                
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputEmail3" class="col-lg-2 col-form-label">Message</label>
+                      <div class="col-lg-6">
+                        <textarea class="form-control"  formControlName='message'
+                          placeholder="Enter your message" ></textarea>
+                        <div *ngIf="sendMessageForm.controls['message'].touched && !sendMessageForm.controls['message'].valid">
+                          <span class="text-danger" *ngIf="sendMessageForm.controls['message'].hasError('required') ">
+                            Message is required
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-lg-2 col-form-label"></label>
+                      
+                      <div class="col-lg-2">
+                        <button type="submit" class="btn btn-primary" [disabled]='!sendMessageForm.valid'>Send</button>
+                      </div>
+                    </div>
+                
+                
+              </form>
+
+
+            </div>
+            <div class="modal-footer">
+
+              <span style="float:left">{{successmessage}}</span>              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>

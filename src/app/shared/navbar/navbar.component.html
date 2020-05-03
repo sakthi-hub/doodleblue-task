@@ -1,0 +1,89 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" (click)="sidebarToggle()">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand"> <i class="fa fa-address-book">Contact</i></a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+              <a href="#">
+                  <p><i class="fa fa-plus" data-toggle="modal" data-target="#addModel">Add</i></p> 
+              </a>
+          </li>
+          <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <p>
+                      {{selectedUser}}
+                      <b class="caret"></b>
+                  </p>
+              </a>
+              <ul class="dropdown-menu">
+                      <li *ngFor="let user of users; index as i">
+                            <a (click)="selecteduser(i)">     {{user.name}} </a>
+                      </li>
+              </ul>
+          </li>      
+      </ul>
+    </div>
+</nav>
+<div class="col-md-6">
+
+    <div class="modal fade" id="addModel" role="dialog" data-backdrop="false">
+      <div class="modal-dialog modal-md">
+
+
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Create Contact</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="adduserForm" (ngSubmit)="adduser(adduserForm)">
+            
+               
+                  <div class="form-group row">
+                    <label for="inputEmail3" class="col-lg-2 col-form-label">Name </label>
+                    <div class="col-lg-6">
+                      <input type="text" class="form-control" formControlName='name' 
+                        placeholder="enter your name">
+                      <div *ngIf="adduserForm.controls['name'].touched && !adduserForm.controls['name'].valid">
+                        <span class="text-danger" *ngIf="adduserForm.controls['name'].hasError('required') ">
+                          Name is required
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  
+                  
+                 
+                  <div class="form-group row">
+                    <label class="col-lg-2 col-form-label"></label>
+                    <div class="col-lg-2">
+                      <button type="submit" class="btn btn-primary" (click)="clearmethod($event)">Reset</button>
+                    </div>
+                    <div class="col-lg-2">
+                      <button type="submit" class="btn btn-primary" [disabled]='!adduserForm.valid'>Add</button>
+                    </div>
+                  </div>
+              
+              
+            </form>
+
+
+          </div>
+          <div class="modal-footer">
+            <span style="float:left">{{addsuccess}}</span>            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
